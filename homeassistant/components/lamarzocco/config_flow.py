@@ -40,6 +40,7 @@ from homeassistant.helpers.selector import (
 from .const import CONF_USE_BLUETOOTH, DOMAIN
 
 CONF_MACHINE = "machine"
+CONF_ACCOUNT = "account"
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -115,14 +116,24 @@ class LmConfigFlow(ConfigFlow, domain=DOMAIN):
                 self._config = data
                 return await self.async_step_machine_selection()
 
+        account_options = ["Home", "Professional"]
+
+        user_schema = vol.Schema(
+            {
+                vol.Required(CONF_USERNAME): str,
+                vol.Required(CONF_PASSWORD): str,
+                vol.Required(CONF_ACCOUNT, default=account_options[0]): SelectSelector(
+                    SelectSelectorConfig(
+                        options=account_options,
+                        mode=SelectSelectorMode.DROPDOWN,
+                    )
+                ),
+            }
+        )
+
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema(
-                {
-                    vol.Required(CONF_USERNAME): str,
-                    vol.Required(CONF_PASSWORD): str,
-                }
-            ),
+            data_schema=user_schema,
             errors=errors,
         )
 
