@@ -41,6 +41,7 @@ from .const import CONF_USE_BLUETOOTH, DOMAIN
 
 CONF_MACHINE = "machine"
 CONF_ACCOUNT = "account"
+CONF_RELAYRID = "relayr_id"
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -80,7 +81,7 @@ class LmConfigFlow(ConfigFlow, domain=DOMAIN):
                 password=data[CONF_PASSWORD],
             )
             try:
-                self._fleet = await cloud_client.get_customer_fleet()
+                self._fleet = await cloud_client.get_customer_fleet(data[CONF_ACCOUNT])
             except AuthFail:
                 _LOGGER.debug("Server rejected login credentials")
                 errors["base"] = "invalid_auth"
@@ -169,8 +170,10 @@ class LmConfigFlow(ConfigFlow, domain=DOMAIN):
                     data={
                         **self._config,
                         CONF_NAME: selected_device.name,
+                        CONF_ACCOUNT: self._config[CONF_ACCOUNT],
                         CONF_MODEL: selected_device.model,
                         CONF_TOKEN: selected_device.communication_key,
+                        CONF_RELAYRID: selected_device.relayrId,
                     },
                 )
 

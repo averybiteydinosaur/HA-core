@@ -13,6 +13,9 @@
     },
     {
       "local_name": "GS3AV_*"
+    },
+    {
+      "local_name": "GB5_*"
     }
   ],
   "codeowners": ["@zweckj"],

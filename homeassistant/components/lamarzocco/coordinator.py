@@ -20,6 +20,9 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 
 from .const import DOMAIN
 
+CONF_ACCOUNT = "account"
+CONF_RELAYRID = "relayr_id"
+
 SCAN_INTERVAL = timedelta(seconds=30)
 FIRMWARE_UPDATE_INTERVAL = 3600
 STATISTICS_UPDATE_INTERVAL = 300
@@ -46,7 +49,9 @@ class LaMarzoccoUpdateCoordinator(DataUpdateCoordinator[None]):
         assert self.config_entry.unique_id
         self.device = LaMarzoccoMachine(
             model=self.config_entry.data[CONF_MODEL],
+            account_type=self.config_entry.data[CONF_ACCOUNT],
             serial_number=self.config_entry.unique_id,
+            relayr_id=self.config_entry.data[CONF_RELAYRID],
             name=self.config_entry.data[CONF_NAME],
             cloud_client=cloud_client,
             local_client=local_client,

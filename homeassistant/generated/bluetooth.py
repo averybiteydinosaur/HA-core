@@ -330,6 +330,10 @@ BLUETOOTH: Final[list[dict[str, bool | str | int | list[int]]]] = [
         "local_name": "GS3AV_*",
     },
     {
+        "domain": "lamarzocco",
+        "local_name": "GB5_*",
+    },
+    {
         "domain": "ld2410_ble",
         "local_name": "HLK-LD2410B_*",
     },

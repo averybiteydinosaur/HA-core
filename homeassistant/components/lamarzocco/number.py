@@ -88,6 +88,7 @@ ENTITIES: tuple[LaMarzoccoNumberEntityDescription, ...] = (
         in (
             MachineModel.GS3_AV,
             MachineModel.GS3_MP,
+            MachineModel.GB5,
         ),
     ),
     LaMarzoccoNumberEntityDescription(
