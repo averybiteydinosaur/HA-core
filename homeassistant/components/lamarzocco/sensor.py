@@ -12,7 +12,13 @@ from homeassistant.components.sensor import (
     SensorEntityDescription,
     SensorStateClass,
 )
-from homeassistant.const import EntityCategory, UnitOfTemperature, UnitOfTime
+from homeassistant.const import (
+    CONCENTRATION_PARTS_PER_MILLION,
+    EntityCategory,
+    UnitOfConductivity,
+    UnitOfTemperature,
+    UnitOfTime,
+)
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
@@ -82,6 +88,25 @@ ENTITIES: tuple[LaMarzoccoSensorEntityDescription, ...] = (
         ].current_temperature,
         supported_fn=lambda coordinator: coordinator.device.model
         != MachineModel.LINEA_MINI,
+    ),
+    LaMarzoccoSensorEntityDescription(
+        key="current_water_hardness",
+        translation_key="current_water_hardness",
+        native_unit_of_measurement=CONCENTRATION_PARTS_PER_MILLION,
+        suggested_display_precision=1,
+        state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda device: device.config.water_hardness,
+        supported_fn=lambda coordinator: coordinator.device.model == MachineModel.GB5,
+    ),
+    LaMarzoccoSensorEntityDescription(
+        key="current_water_conductivity",
+        translation_key="current_water_conductivity",
+        native_unit_of_measurement=UnitOfConductivity.MICROSIEMENS,
+        device_class=SensorDeviceClass.CONDUCTIVITY,
+        suggested_display_precision=1,
+        state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda device: device.config.water_conductivity,
+        supported_fn=lambda coordinator: coordinator.device.model == MachineModel.GB5,
     ),
 )
 

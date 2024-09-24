@@ -129,6 +129,12 @@
       "current_temp_coffee": {
         "name": "Current coffee temperature"
       },
+      "current_water_hardness": {
+        "name": "Current water hardness"
+      },
+      "current_water_conductivity": {
+        "name": "Current water conductivity"
+      },
       "current_temp_steam": {
         "name": "Current steam temperature"
       },
